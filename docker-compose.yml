@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: gunicorn -b 0.0.0.0:8000 devops07t2tra.wsgi:application
+    depends_on:
+      - postgres
+    volumes:
+      - .:/usr/src/devops07t2tra
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://t2tra@postgres/master
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: t2tra
+      POSTGRES_DB: master
